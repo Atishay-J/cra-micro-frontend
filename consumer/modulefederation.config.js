@@ -2,9 +2,7 @@ const deps = require('./package.json').dependencies;
 
 module.exports = {
   name: 'consumer',
-  // exposes: {
-  //   './Button': './src/Button'
-  // },
+
   remotes: {
     provider: 'provider@http://localhost:3006/remoteEntry.js'
   },

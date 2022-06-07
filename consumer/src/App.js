@@ -3,8 +3,6 @@ import './App.css';
 
 const RemoteApp = React.lazy(() => import('provider/RemoteApp'));
 
-console.log('Navbar', RemoteApp);
-
 function App() {
   return (
     <div className="App">
