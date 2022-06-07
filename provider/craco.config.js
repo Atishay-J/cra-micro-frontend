@@ -1,42 +1,39 @@
-const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const deps = require('./package.json').dependencies;
+const overrideWebpackConfig = require('./overide-config');
 
 module.exports = {
-  overrideWebpackConfig: ({ webpackConfig }) => {
-    webpackConfig.output.publicPath = 'auto';
-  },
-  webpack: {
-    configure: (webpackConfig) => {
-      webpackConfig.plugins = [
-        ...webpackConfig.plugins,
-
-        new ModuleFederationPlugin({
-          name: 'provider',
-          filename: 'remoteEntry.js',
-          exposes: {
-            './RemoteApp': './src/App'
-          },
-          shared: {
-            ...deps,
-            react: {
-              singleton: true,
-              requiredVersion: deps['react']
-            },
-            'react-dom': {
-              singleton: true,
-              requiredVersion: deps['react-dom']
-            }
-          }
-        }),
-        new HtmlWebpackPlugin({
-          template: './public/index.html'
-        })
-      ];
-      return webpackConfig;
-    },
-    output: {
-      publicPath: 'http://localhost:3006/'
+  plugins: [
+    {
+      plugin: overrideWebpackConfig
     }
+  ],
+  webpack: {
+    plugins: {
+      remove: ['ModuleScopePlugin']
+    }
+    // configure: (webpackConfig) => {
+    //   webpackConfig.plugins = [
+    //     // ...webpackConfig.plugins,
+
+    //     new ModuleFederationPlugin({
+    //       name: 'provider',
+    //       filename: 'remoteEntry.js',
+    //       exposes: {
+    //         './RemoteApp': './src/components/Navbar.jsx'
+    //       },
+    //       shared: {
+    //         ...deps,
+    //         react: {
+    //           singleton: true,
+    //           requiredVersion: deps['react']
+    //         },
+    //         'react-dom': {
+    //           singleton: true,
+    //           requiredVersion: deps['react-dom']
+    //         }
+    //       }
+    //     })
+    //   ];
+    //   return webpackConfig;
+    // }
   }
 };

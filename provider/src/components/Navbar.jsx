@@ -10,7 +10,7 @@ export default function Navbar() {
         lineHeight: '3rem'
       }}
     >
-      Navbar
+      Navbars
     </div>
   );
 }
